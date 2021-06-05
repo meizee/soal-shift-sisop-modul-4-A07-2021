@@ -13,19 +13,32 @@
 static const char * directoryPath = "/home/hasna/Documents/git_env";
 char prefix[6] = "AtoZ_";
 
-void logSystem(char* c, int type){
+void logging(char* c, int type){
     FILE * logFile = fopen("/home/hasna/SinSeiFS.log", "a");
 	time_t currTime;
 	struct tm * time_info;
 	time ( &currTime );
 	time_info = localtime (&currTime);
-    int yr=time_info->tm_year + 1900,mon=time_info->tm_mon + 1,day=time_info->tm_mday,hour=time_info->tm_hour,min=time_info->tm_min,sec=time_info->tm_sec;
+
+    int yr=time_info->tm_year + 1900;
+	int mon=time_info->tm_mon + 1;
+	int day=time_info->tm_mday;
+	int hour=time_info->tm_hour;
+	int min=time_info->tm_min;
+	int sec=time_info->tm_sec;
+
     if(type==1){//info
         fprintf(logFile, "INFO::%02d%02d%d-%d:%d:%d:%s\n", day, mon, yr, hour, min, sec, c);
     }
     else if(type==2){ //warning
         fprintf(logFile, "WARNING::%02d%02d%d-%d:%d:%d:%s\n", day, mon, yr, hour, min, sec, c);
     }
+    fclose(logFile);
+}
+
+void logging2(const char* old, char* new) {
+	FILE * logFile = fopen("./filelog.log", "a");
+    fprintf(logFile, "%s → %s\n", old, new);
     fclose(logFile);
 }
 
@@ -148,7 +161,10 @@ static int xmp_mkdir(const char *path, mode_t mode){
 	int result = mkdir(newPath, mode);
     char str[100];
 	sprintf(str, "MKDIR::%s", path);
-	logSystem(str,1);
+	logging(str,1);
+	logSystem2(path, newPath);
+	printf("%s\n",path);
+	printf("%s\n",newPath);
 	if (result == -1)
 		return -errno;
 
@@ -177,7 +193,7 @@ static int xmp_mknod(const char *path, mode_t mode, dev_t rdev){
 		result = mknod(newPath, mode, rdev);
     char str[100];
 	sprintf(str, "CREATE::%s", path);
-	logSystem(str,1);
+	logging(str,1);
 	if (result == -1)
 		return -errno;
 
@@ -199,7 +215,7 @@ static int xmp_unlink(const char *path) {
         sprintf(newPath, "%s%s",directoryPath,path);
     char str[100];
 	sprintf(str, "REMOVE::%s", path);
-	logSystem(str,2);
+	logging(str,2);
 	int result;
 	result = unlink(newPath);
 	if (result == -1)
@@ -219,7 +235,7 @@ static int xmp_rmdir(const char *path) {//ngehapus directory
 	sprintf(newPath, "%s%s",directoryPath,path);
     char str[100];
 	sprintf(str, "RMDIR::%s", path);
-	logSystem(str,2);
+	logging(str,2);
 	int result;
 	result = rmdir(newPath);
 	if (result == -1)
@@ -235,7 +251,7 @@ static int xmp_rename(const char *source, const char *dest) { //buat renme
 
     char str[100];
 	sprintf(str, "RENAME::%s::%s", source, dest);
-	logSystem(str,1);
+	logging(str,1);
 	int result;
 	result = rename(fileSource, fileDest);
 	if (result == -1)
@@ -286,7 +302,7 @@ static int xmp_write(const char *path, const char *buf, size_t size, off_t offse
 		return -errno;
     char str[100];
 	sprintf(str, "WRITE::%s", path);
-	logSystem(str,1);
+	logging(str,1);
 	result = pwrite(fd, buf, size, offset);
 	if (result == -1)
 		result = -errno;
@@ -309,7 +325,10 @@ static struct fuse_operations xmp_oper = {
 };
 
 int  main(int  argc, char *argv[]){
+	printf("halo");
+
 	umask(0);
 
 	return fuse_main(argc, argv, &xmp_oper, NULL);
+
 }
