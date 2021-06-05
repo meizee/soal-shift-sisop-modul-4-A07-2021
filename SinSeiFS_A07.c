@@ -162,7 +162,7 @@ static int xmp_mkdir(const char *path, mode_t mode){
     char str[100];
 	sprintf(str, "MKDIR::%s", path);
 	logging(str,1);
-	logSystem2(path, newPath);
+	logging2(path, newPath);
 	printf("%s\n",path);
 	printf("%s\n",newPath);
 	if (result == -1)
