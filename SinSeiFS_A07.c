@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 #define SEGMENT 1024 
 
-static const char * directoryPath = "/home/hasna/Documents/git_env";
+static const char * directoryPath = "/home/hasna/Downloads";
 char prefix[6] = "AtoZ_";
 
 void logging(char* c, int type){
@@ -37,7 +37,9 @@ void logging(char* c, int type){
 }
 
 void logging2(const char* old, char* new) {
-	FILE * logFile = fopen("./filelog.log", "a");
+	char* filename = basename(new);
+	
+	FILE * logFile = fopen("/home/hasna/fs.log", "a");
     fprintf(logFile, "%s → %s\n", old, new);
     fclose(logFile);
 }
@@ -162,7 +164,7 @@ static int xmp_mkdir(const char *path, mode_t mode){
     char str[100];
 	sprintf(str, "MKDIR::%s", path);
 	logging(str,1);
-	logging2(path, newPath);
+	logging2(newPath, newPath);
 	printf("%s\n",path);
 	printf("%s\n",newPath);
 	if (result == -1)
@@ -252,6 +254,7 @@ static int xmp_rename(const char *source, const char *dest) { //buat renme
     char str[100];
 	sprintf(str, "RENAME::%s::%s", source, dest);
 	logging(str,1);
+	logging2(fileSource, fileDest);
 	int result;
 	result = rename(fileSource, fileDest);
 	if (result == -1)
