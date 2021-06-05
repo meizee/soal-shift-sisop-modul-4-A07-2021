@@ -164,7 +164,13 @@ static int xmp_mkdir(const char *path, mode_t mode){
     char str[100];
 	sprintf(str, "MKDIR::%s", path);
 	logging(str,1);
-	logging2(newPath, newPath);
+
+	char * folderPath = strstr(path, prefix);
+    
+	if(folderPath != NULL) {
+        logging2(newPath, newPath);
+    }
+	
 	printf("%s\n",path);
 	printf("%s\n",newPath);
 	if (result == -1)
@@ -217,7 +223,13 @@ static int xmp_unlink(const char *path) {
         sprintf(newPath, "%s%s",directoryPath,path);
     char str[100];
 	sprintf(str, "REMOVE::%s", path);
-	logging(str,2);
+	
+	char * folderPath = strstr(path, prefix);
+    
+	if(folderPath != NULL) {
+        logging(str,2);
+    }
+
 	int result;
 	result = unlink(newPath);
 	if (result == -1)
