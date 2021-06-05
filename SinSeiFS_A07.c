@@ -37,8 +37,8 @@ void logging(char* c, int type){
 }
 
 void logging2(const char* old, char* new) {
-	char* filename = basename(new);
-	
+	// char* filename = basename(new);
+
 	FILE * logFile = fopen("/home/hasna/fs.log", "a");
     fprintf(logFile, "%s → %s\n", old, new);
     fclose(logFile);
