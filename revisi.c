@@ -8,10 +8,22 @@
 #include <errno.h>
 #include <sys/time.h>
 #include <sys/wait.h>
+#include <libgen.h>
+
+#include <stdbool.h>
+#include <stdlib.h>
 #define SEGMENT 1024 
 
 static const char * directoryPath = "/home/hasna/Downloads";
 char prefix[6] = "AtoZ_";
+
+bool isAtoZ(const char *path) {
+    int len = strlen(path);
+    for (int i = 0; i < len - 5 + 1; i++) {
+        if (path[i] == 'A' && path[i+1] == 't' && path[i+2] == 'o' && path[i+3] == 'Z' && path[i+4] == '_') return true;
+    }
+    return false;
+}
 
 void logging(char* c, int type){
     FILE * logFile = fopen("/home/hasna/SinSeiFS.log", "a");
@@ -28,21 +40,38 @@ void logging(char* c, int type){
 	int sec=time_info->tm_sec;
 
     if(type==1){//info
-        fprintf(logFile, "INFO::%02d%02d%d-%02d:%02d:%02d:%s\n", day, mon, yr, hour, min, sec, c);
+        fprintf(logFile, "INFO::%02d%02d%d-%d:%d:%d:%s\n", day, mon, yr, hour, min, sec, c);
     }
     else if(type==2){ //warning
-        fprintf(logFile, "WARNING::%02d%02d%d-%02d:%02d:%02d:%s\n", day, mon, yr, hour, min, sec, c);
+        fprintf(logFile, "WARNING::%02d%02d%d-%d:%d:%d:%s\n", day, mon, yr, hour, min, sec, c);
     }
     fclose(logFile);
 }
 
 void logging2(const char* old, char* new) {
-	// char* filename = basename(new);
+	char* filename = basename(new);
 
-	FILE * logFile = fopen("/home/hasna/fs.log", "a");
-    fprintf(logFile, "%s → %s\n", old, new);
-    fclose(logFile);
+	if(isAtoZ(filename)) {
+		FILE * logFile = fopen("/home/hasna/fs.log", "a");
+    	fprintf(logFile, "%s → %s\n", old, new);
+    	fclose(logFile);
+	}
+		
 }
+
+// void logEncode(char *dir1, char *dir2) {
+//     char buff[1024], cmd[32];
+//     if (dir1[0] != '\0') {
+//         strcpy(cmd, "RENAME");
+//         sprintf(buff, "%s::%s", dir1, dir2);
+//         logInfo(cmd, buff);
+//     }
+//     else {
+//         strcpy(cmd, "CREATE");
+//         sprintf(buff, "%s", dir2);
+//         logWarn(cmd, buff);
+//     }
+// }
 
 void encode1(char* strEnc1) { 
 	if(strcmp(strEnc1, ".") == 0 || strcmp(strEnc1, "..") == 0)
