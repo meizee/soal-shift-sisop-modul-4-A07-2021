@@ -236,6 +236,8 @@ Log:
 ![1d](img/1d-log.png)
 
 ### Kendala
+
+Decode dan encode belum bisa berjalan pada fungsi mkdir.
 ## Soal 2
 Enkripsi tambahan
 a. Jika sebuah direktori dibuat dengan awalan “RX_[Nama]”, maka direktori
@@ -363,14 +365,19 @@ void logEncode(char *dir1, char *dir2, char *cmd, int type) {
 
 ### Screenshot
 Sebelum rename:
+
 ![2a](img/2a-sebelum.png)
 
 Setelah rename:
+
 ![2b](img/2b-sesudah.png)
 
 ![2c](img/2c-sesudah.png)
 
 ### Kendala
+
+1. Decode dan encode belum bisa berjalan pada fungsi mkdir.
+2. Pada nomer 2e belum dapat diselesaikan karena kurangnya waktu dan ide cara pengerjaan yang dapat digunakan untuk mengatasi hal tersebut. Meskipun begitu terdapat ide untuk melakukan manipulasi file pada bagian readdir tetapi karena kurang petunjuk kami ragu untuk mengimplementasikannya.
 ## Soal 3
 
 a. Jika sebuah direktori dibuat dengan awalan “A_is_a_”, maka direktori tersebut akan menjadi sebuah direktori spesial.
@@ -431,7 +438,7 @@ Setelah rename:
 ![3d](img/3-d-sesudah.png)
 
 ### Kendala
-
+Kesulitan dalam menjadikan lowercase insensitive dan mengubah ekstensi dari desimal binner perbedaan namanya.
 ## Soal 4
 
 Untuk memudahkan dalam memonitor kegiatan pada filesystem mereka Sin dan Sei
@@ -503,3 +510,4 @@ void logWarn(char *command, char *desc) {
 ![4](img/4.png)
 
 ### Kendala
+Tidak ada kendala dalam soal 4.
