@@ -44,11 +44,6 @@ void encodeAtbash(char *s) {
 }
 
 ```
-
-SS:
-
-![1a](img/1a-sebelum.png)
-
 #### 1. b.
 Jika terdapat rename folder sehingga berawalan "AtoZ_", maka fungsi `xmp_rename` akan terpanggil. Fungsi ini akan mengecek apakah direktori berawalan dengan "AtoZ_" atau tidak. Jika iya, maka akan di-encode, jika tidak maka akan di-decode dengan fungsi yang ada di 1.c.
 
@@ -130,9 +125,6 @@ static int xmp_rename(const char *from, const char *to, unsigned int flags) {
 }
 ```
 
-SS:
-
-![1b](img/1b-sesudah.png)
 #### 1. c.
 Sedangkan untuk decode-nya, hampir sama seperti fungsi encode karena rumus dari Atbash cipher sendiri sama untuk encode dan decode-nya:
 ```C
@@ -144,9 +136,6 @@ void decodeAtbash(char *s) {
     }
 }
 ```
-SS:
-
-![1c](img/1c-sesudah.png)
 #### 1. d.
 Kemudian untuk melakukan logging encode dari soal ini adalah sebagai berikut:
 ```C
@@ -163,10 +152,6 @@ void logEncode(char *dir1, char *dir2, char *cmd, int type) {
 }
 ```
 Jika terdapat pembuatan folder atau rename di folder yang berawalan AtoZ akan tercatat pada log dengan format : **/home/[USER]/Downloads/[Nama Direktori]** → **/home/[USER]/Downloads/AtoZ\_[Nama Direktori]**.
-
-SS:
-
-![1d](img/1d-log.png)
 
 #### 1.e.
 
@@ -236,7 +221,21 @@ int decodeFolderRecursively(char *basePath, int depth) {
 }
 ```
 
+### Screenshot
+Sebelum rename:
 
+![1a](img/1a-sebelum.png)
+
+Setelah rename:
+
+![1b](img/1b-sesudah.png)
+
+![1c](img/1c-sesudah.png)
+
+Log:
+![1d](img/1d-log.png)
+
+### Kendala
 ## Soal 2
 Enkripsi tambahan
 a. Jika sebuah direktori dibuat dengan awalan “RX_[Nama]”, maka direktori
@@ -297,10 +296,6 @@ void encodeROT13(char *s) {
     }
 }
 ```
-SS:
-
-![2a](img/2a-sebelum.png)
-
 #### 2. b.
 Untuk melakukan encoding pada folder yang di-rename menjadi berawalan "RX_", kita gunakan algoritma Atbash + Vigenere dengan keyword "SISOP" sebagai berikut:
 ```C
@@ -321,10 +316,6 @@ void encodeVig(char *s) {
     }
 }
 ```
-
-SS:
-
-![2b](img/2b-sesudah.png)
 
 #### 2. c.
 Untuk melakukan decode digunakan fungsi-fungsi berikut:
@@ -352,9 +343,6 @@ void decodeVig(char *s) {
     }
 }
 ```
-SS:
-
-![2c](img/2c-sesudah.png)
 
 #### 2. d.
 Untuk mencatat ke log jika terjadi encoding maka digunakan fungsi berikut
@@ -373,6 +361,16 @@ void logEncode(char *dir1, char *dir2, char *cmd, int type) {
 }
 ```
 
+### Screenshot
+Sebelum rename:
+![2a](img/2a-sebelum.png)
+
+Setelah rename:
+![2b](img/2b-sesudah.png)
+
+![2c](img/2c-sesudah.png)
+
+### Kendala
 ## Soal 3
 
 a. Jika sebuah direktori dibuat dengan awalan “A_is_a_”, maka direktori tersebut akan menjadi sebuah direktori spesial.
@@ -411,25 +409,28 @@ bool isAisA(const char *path) {
     return false;
 }
 ```
-SS:
 
-![3a](img/3-a-sebelum.png)
 #### 3. b. dan 3. c.
 Ketika terjadi rename, maka fungsi `xmp_rename` akan terpanggil dan akan melakukan pengecekan pada folder tersebut, dengan membandingkan nama awal dan nama akhirnya, dari situ kita tahu apakah sebuah folder itu awalnya tidak spesial menjadi spesial, atau sebaliknya.
 
-SS:
-
-![3b](img/3-b-sebelum.png)
-![3c](img/3-c-sesudah.png)
 
 #### 3. d.
 Ketika folder yang tidak spesial atau berawalan "AtoZ_" atau "RX_" di-rename menjadi folder spesial "A_is_a", maka digunakan fungsi `decodeFolderRecursively` dengan depth = 0 supaya proses decode hanya berlaku pada file yang berada di dalamnya. 
 
 Ketika folder spesial di-rename menjadi folder "AtoZ_" atau "RX_", maka digunakan fungsi  `encodeFolderRecursively` dengan depth = 0 supaya proses encode hanya berlaku pada file yang berada di dalamnya.
 
-SS:
+### Screenshot
+Sebelum rename:
+![3a](img/3-a-sebelum.png)
+
+![3b](img/3-b-sebelum.png)
+
+Setelah rename:
+![3c](img/3-c-sesudah.png)
 
 ![3d](img/3-d-sesudah.png)
+
+### Kendala
 
 ## Soal 4
 
@@ -498,6 +499,7 @@ void logWarn(char *command, char *desc) {
 }
 ```
 
-SS:
-
+### Screenshot
 ![4](img/4.png)
+
+### Kendala
