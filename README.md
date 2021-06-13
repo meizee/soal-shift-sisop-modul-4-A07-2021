@@ -428,11 +428,13 @@ Ketika folder spesial di-rename menjadi folder "AtoZ_" atau "RX_", maka digunaka
 
 ### Screenshot
 Sebelum rename:
+
 ![3a](img/3-a-sebelum.png)
 
 ![3b](img/3-b-sebelum.png)
 
 Setelah rename:
+
 ![3c](img/3-c-sesudah.png)
 
 ![3d](img/3-d-sesudah.png)
